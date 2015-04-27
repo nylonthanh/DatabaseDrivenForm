@@ -1,0 +1,41 @@
+1. html form that someone submits
+2. the data gets stored in a mysql db
+3. the form gets emailed to ???
+4. thank you page shows up
+
+
+
+1 controller that fetches from a db a list of form fields to display
+2 each field should be a sql db row (field_name, field_type, required, default_value...)
+3 pass the data to the view
+4 view tpl will have boilerplate html to  build a form
+5 tpl will loop through data received frm the controller to build each form element
+
+
+We would like you to create a database driven HTML form.  As this is a back-end position, the page's look and feel are not important, but the overall parameters are.
+
+The look and feel of the overall site should be controlled by a constructor template.  The template parsing should be handled by Smarty or any other template system.  The template HTML itself can be stored in the database or file.
+
+The form fields themselves and the order they're displayed on the page should be dynamically generated based on a MySQL stored set of parameters (eg, you need to devise a storage facility that will store the type of field to display, size, order to display, default value(s), whether they're required or not, etc)
+
+The form must contain the following:
+
+- First Name
+- Last Name
+- Email
+- Address (street, city, state, zip/postal)
+- Phone
+- Fax
+- A drop down list of "Best time to contact" giving them the option of Morning, Afternoon, Evening
+- A checkbox for a faux Term of Services agreement
+
+All fields except Fax should be required.
+
+When the form is submitted, an email should be generated to the email address supplied - with the contents of the form contained within.
+
+After the email is sent, display a confirmation page thanking the person for contacting us.
+
+The code should be object oriented.  Perhaps a class to generate the pages, a class for the form fields  and a class to validate the form - however, do what you see fit to display your OO capabilities.
+
+Once you are done,  can you please upload the code and the MySQL file to a github repository?
+
