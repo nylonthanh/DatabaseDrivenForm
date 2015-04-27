@@ -2,7 +2,8 @@
 
 namespace Cleanify\Controller;
 
-require_once 'Form.php';
+require_once '../../vendor/autoload.php';
+
 class Page
 {
     protected $formFields;
@@ -26,10 +27,17 @@ class Page
             die('empty config');
         }
 
-//        (new Cleanify\View\SubmissionForm())->;
+        (new Form)->display('form.tpl');
 
+    }
 
+    public function displayThankYouPage(){
+        
+    }
 
+    public function sendEmail()
+    {
+        
     }
 }
 

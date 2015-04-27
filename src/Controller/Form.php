@@ -13,8 +13,8 @@ class Form
     public function __construct()
     {
         $this->smarty = new \Smarty();
-        $this->smarty->template_dir = "templates/";
-        $this->smarty->compile_dir = "templates_c/";
+        $this->smarty->template_dir = "../View/templates/";
+        $this->smarty->compile_dir = "../View/templates_c/";
 
     }
 
@@ -28,7 +28,6 @@ class Form
      */
     public function getFormFields()
     {
-        return FormFields::get();
+        return Model\FormFields::get();
     }
 }
-
