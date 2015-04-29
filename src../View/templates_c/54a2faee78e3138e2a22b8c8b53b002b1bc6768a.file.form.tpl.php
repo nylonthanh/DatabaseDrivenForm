@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-04-29 06:29:05
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2015-04-29 09:38:17
          compiled from "/Users/thanh/Library/Mobile Documents/com~apple~CloudDocs/programming/Cleanify/src/View/templates/form.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:631993197553ee0b28d7341-04985574%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '54a2faee78e3138e2a22b8c8b53b002b1bc6768a' => 
     array (
       0 => '/Users/thanh/Library/Mobile Documents/com~apple~CloudDocs/programming/Cleanify/src/View/templates/form.tpl',
-      1 => 1430281742,
+      1 => 1430293093,
       2 => 'file',
     ),
   ),
@@ -44,7 +44,7 @@ $_smarty_tpl->tpl_vars['formField']->_loop = true;
 </td><td><input type="<?php echo $_smarty_tpl->tpl_vars['formField']->value['input_type'];?>
 " name="<?php echo $_smarty_tpl->tpl_vars['formField']->value['field_name'];?>
 " id="<?php echo $_smarty_tpl->tpl_vars['formField']->value['field_name'];?>
- value="<?php echo $_smarty_tpl->tpl_vars['formField']->value['form_value'];?>
+" value="<?php echo (($tmp = @$_smarty_tpl->tpl_vars['formField']->value['form_value'])===null||$tmp==='' ? '' : $tmp);?>
 "></td></tr>
             <?php } ?>
             <tr>

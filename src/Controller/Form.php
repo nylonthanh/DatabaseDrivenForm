@@ -37,7 +37,6 @@ class Form
         
     }
 }
-
 ini_set('display_errors', -1);
 
 if (isset($_POST) && sizeof($_POST) > 0) {
@@ -46,19 +45,20 @@ if (isset($_POST) && sizeof($_POST) > 0) {
         //TODO: sanitize POST
         //TODO: validate fields
         $sanitizedData = $_POST;
-        Model\FormFields::writeFieldsToDb($sanitizedData);
+        Model\FormFields::writeFields($sanitizedData);
 
     } catch(\Exception $e) {
         throw $e;
     }
 
+
+
+
     try {
-        Email::sendEmail();
+        Email::sendEmail($sanitizedData);
     } catch (\Exception $e) {
         throw $e;
     }
-
-    //email
 
     //thank you page
 }

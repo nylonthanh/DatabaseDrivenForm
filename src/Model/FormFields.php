@@ -51,27 +51,30 @@ class FormFields
            throw new Exception('Could not connect with database.');
         }
 
-        $sql = 'SELECT field_name, field_value, input_type, filter_sanatize_type, required
-            FROM submission_form_contents
-            ORDER BY `order` ASC';
+        try {
+            $dbFieldNames = self::getDbFieldNames($dbh);
+
+        } catch (\Exception $e) {
+            throw $e;
+
+        }
+
+        $sql = "SELECT $dbFieldNames
+            FROM " . DB_FORM_TABLE . "
+            ORDER BY `order` ASC";
 
         try {
-            $query= $dbh->prepare($sql);
-            $query->execute();
-            $result = $query->fetchAll();
-            $dbh = null;
-
-            return $result;
+            return self::selectQuery($dbh, $sql);
 
         } catch(Exception $e) {
-            error_log("DB Query Error: " . $e->getMessage(), 3, "../errorLog.txt");
-            throw new Exception("DB Error: $e->getMessage()");
+            throw $e;
 
         }
 
     }
 
-    public static function writeFieldsToDb($fieldArray){
+    public static function writeFields($fieldArray)
+    {
         $dbh = null;
         try {
             $dbh = self::dbConnect();
@@ -82,12 +85,61 @@ class FormFields
         }
     }
 
-    protected static function insertFieldsIntoDb($dbh, $formData){
+    /**
+     * returns array of column names
+     * intended for getting all the field names to build the form
+     * @param $dbh
+     * @return mixed
+     * @throws \Exception
+     */
+    protected static function getDbFieldNames($dbh){
+        if (empty($dbh)) {
+            throw new \Exception('Could not connect with database.');
+        }
+
+        $query = '
+            SELECT `COLUMN_NAME`
+            FROM `INFORMATION_SCHEMA`.`COLUMNS`
+            WHERE `TABLE_SCHEMA` = \'' .  DB_NAME . '\'
+            AND `TABLE_NAME`= \'' . DB_FORM_TABLE . '\';
+        ';
+
+        try {
+            $columnArray = self::selectQuery($dbh, $query);
+
+        } catch(\Exception $e) {
+            throw $e;
+
+        }
+
+        $columnName = '';
+        foreach ($columnArray as $columnIndex => $columnValue) {
+           foreach($columnValue as $fieldName => $fieldValue) {
+                if ($fieldName === 'COLUMN_NAME') {
+                    $columnName .= " `$fieldValue`,";
+                }
+           }
+        }
+
+        return trim($columnName, ' ,');
+
+    }
+
+    /**
+     * does the DB insert of form data
+     * @param $dbh
+     * @param $formData
+     * @return mixed
+     * @throws \Exception
+     * @TODO refactor out methods, simplify
+     */
+    protected static function insertFieldsIntoDb($dbh, $formData)
+    {
         if (empty($dbh)) {
             $errorLogPath = realpath(dirname(__FILE__) . '/../..') . '/config/errorLog.txt';
             error_log("DB Error: not connect with database. " .
                 __METHOD__ .  " \n" . __LINE__, 3, $errorLogPath);
-            throw new Exception('Could not connect with database.');
+            throw new \Exception('Could not connect with database.');
         }
 
         $sqlFields = array_keys($formData);
@@ -116,7 +168,7 @@ class FormFields
 
         try {
             $sql = "
-                INSERT INTO submission_data ($sqlFields)
+                INSERT INTO . " . DB_FORM_DATA . "($sqlFields)
                 VALUES ($preparedValues);
             ";
 
@@ -127,7 +179,31 @@ class FormFields
             return $pdoResult;
 
         } catch(Exception $e) {
-            throw Exception("DB Error: $e->getMessage()");
+            throw new \Exception("DB Error: $e->getMessage()");
+
+        }
+    }
+
+    /**
+     * method meant to save some code / reuse
+     * @param $dbh
+     * @param $sql
+     * @return mixed
+     * @throws Exception
+     */
+    protected static function selectQuery($dbh, $sql)
+    {
+        try {
+            $query = $dbh->prepare($sql);
+            $query->execute();
+            $result = $query->fetchAll();
+            $dbh = null;
+
+            return $result;
+
+        } catch (Exception $e) {
+            error_log("DB Query Error: " . $e->getMessage(), 3, "../errorLog.txt");
+            throw new Exception("DB Error: $e->getMessage()");
 
         }
     }
