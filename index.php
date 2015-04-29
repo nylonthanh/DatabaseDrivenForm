@@ -2,7 +2,10 @@
 
 include 'vendor/autoload.php';
 
-ini_set('display_errors', 1);
+/**
+ * This is the client
+ */
+//ini_set('display_errors', 1);
 
 if (isset($_POST) && sizeof($_POST) > 0) {
     //sanitize data, check $_POST data type is correct
