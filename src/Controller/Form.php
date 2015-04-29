@@ -36,35 +36,7 @@ class Form
     public function getFormFields()
     {
         return Model\FormFields::get();
+
     }
-
-    public function submitForm(){
-        
-    }
-}
-ini_set('display_errors', -1);
-
-if (isset($_POST) && sizeof($_POST) > 0) {
-    //sanitize data, check $_POST data type is correct
-    try {
-        SanitizeData::checkType($_POST, $type = 'array');
-        //TODO: sanitize POST
-        //TODO: validate fields
-        $sanitizedData = $_POST; //<<<<<update me
-        Model\FormFields::writeFields($sanitizedData);
-
-    } catch(\Exception $e) {
-        throw $e;
-    }
-
-    //send email of form submitted
-    try {
-        Email::sendEmail($sanitizedData);
-    } catch (\Exception $e) {
-        throw $e;
-    }
-
-    (new Page('thanks'));
-
 
 }

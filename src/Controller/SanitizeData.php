@@ -30,7 +30,13 @@ class SanitizeData
 
     }
 
+    /**
+     * @return bool
+     * @todo: build this out!
+     */
     public static function checkRequired(){
-        return true;
+        return true; //testing
+
     }
+
 }

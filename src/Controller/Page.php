@@ -40,7 +40,7 @@ class Page
             die('empty config');
         }
 
-        (new Form)->display('form.tpl', $formArray, 'src/Controller/Form.php');
+        (new Form)->display('form.tpl', $formArray, 'index.php');
 
     }
 
