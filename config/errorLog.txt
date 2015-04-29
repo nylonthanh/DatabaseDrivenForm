@@ -1,0 +1,15 @@
+INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Controller\SanitizeData::checkType 
+21INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Controller\SanitizeData::checkType 
+20INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Controller\SanitizeData::checkType 
+20INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Controller\SanitizeData::checkType 
+20INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Controller\SanitizeData::checkType 
+20INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Controller\SanitizeData::checkType 
+20INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Controller\SanitizeData::checkType 
+20INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Controller\SanitizeData::checkType 
+20INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Controller\SanitizeData::checkType 
+23INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Controller\SanitizeData::checkType 
+23INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Controller\SanitizeData::checkType 
+23INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Controller\SanitizeData::checkType 
+23INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Controller\SanitizeData::checkType 
+23INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Controller\SanitizeData::checkType 
+23

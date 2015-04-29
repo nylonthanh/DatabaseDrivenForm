@@ -2,8 +2,6 @@
 
 namespace Cleanify\Controller;
 
-require_once '../../vendor/autoload.php';
-
 class Page
 {
     protected $formFields;
@@ -13,6 +11,7 @@ class Page
         if ($view === 'form') {
             $this->formFields = (new Form())->getFormFields();
             $this->displayFormFields($this->formFields);
+
         }
 
         if ($view === 'thanks') {
@@ -27,11 +26,12 @@ class Page
             die('empty config');
         }
 
-        (new Form)->display('form.tpl');
+        (new Form)->display('form.tpl', $formArray, 'src/Controller/Form.php');
 
     }
 
-    public function displayThankYouPage(){
+    public function displayThankYouPage()
+    {
         
     }
 
@@ -39,6 +39,10 @@ class Page
     {
         
     }
+
+    public function errorPage()
+    {
+
+    }
 }
 
-(new Page());
