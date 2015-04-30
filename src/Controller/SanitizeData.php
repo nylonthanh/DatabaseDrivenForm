@@ -34,9 +34,36 @@ class SanitizeData
      * @return bool
      * @todo: build this out!
      */
-    public static function checkRequired(){
-        return true; //testing
+    public static function checkRequiredAndNotEmpty($data, $dataType)
+    {
+        if ($dataType !== 'array') {
+            throw new \Exception('Form submission error: Failed Type comparison; Expecting type array.');
+
+        }
+
+        try {
+            return array_walk($data, function(&$data, $index)
+            {
+                return (self::isRequired($index) && !empty($data));
+            });
+
+        } catch(\Exception $e) {
+            throw $e;
+
+        }
 
     }
 
+    /**
+     * check if fieldName has a required field
+     * @param $fieldName
+     * @returns bool
+     * @throws \Cleanify\Model\Exception
+     */
+    public static function isRequired($fieldName)
+    {
+        $fieldNameArray = \Cleanify\Model\FormFields::get();
+
+
+    }
 }

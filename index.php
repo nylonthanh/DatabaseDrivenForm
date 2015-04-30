@@ -5,20 +5,39 @@ include 'vendor/autoload.php';
 /**
  * This is the client
  */
-//ini_set('display_errors', 1);
+ini_set('display_errors', 1);
 
-if (isset($_POST) && sizeof($_POST) > 0) {
-    //sanitize data, check $_POST data type is correct
+$sanitizedData  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
+    $type = 'array';
+    //check sanitize data, check $sanitizedData data type is an array
     try {
-        Cleanify\Controller\SanitizeData::checkType($_POST, $type = 'array');
-        //TODO: sanitize POST
-        //TODO: validate fields
-        $sanitizedData = $_POST; //<<<<<update me
-        Cleanify\Model\FormFields::writeFields($sanitizedData);
+        Cleanify\Controller\SanitizeData::checkType($sanitizedData, $type);
 
     } catch(\Exception $e) {
         throw $e;
     }
+
+    //check if it's required and not empty
+    try {
+        Cleanify\Controller\SanitizeData::checkRequiredAndNotEmpty($sanitizedData, $type);
+
+    } catch(Exception $e) {
+        throw $e;
+
+    }
+
+    //TODO: validate fields
+    //TODO: use controller to write fields
+    try {
+        Cleanify\Model\FormFields::writeFields($sanitizedData);
+
+    } catch(Exception $e){
+        throw $e;
+
+    }
+
 
     //send email of form submitted
     try {
@@ -31,6 +50,7 @@ if (isset($_POST) && sizeof($_POST) > 0) {
 
 } else {
     (new Cleanify\Controller\Page());
+
 }
 
 

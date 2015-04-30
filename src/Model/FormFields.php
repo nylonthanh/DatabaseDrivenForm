@@ -7,18 +7,26 @@ use Cleanify\Controller\SanitizeData;
 require_once(realpath(dirname(__FILE__) . '/../..') . '/config/config.php');
 /**
  * page class Controller
+ * @todo: refactor methods to be more reusable - get getall, etc
  */
 class FormFields
 {
     /**
      * purpose: to get form fields from database
+     * @return mixed
+     * @throws \Exception
+     * @todo: add caching
      */
-    public static function get()
+    public static function get($fieldName = null)
     {
+//        if ($cached) {
+//            return $cached;
+//        }
+
         $dbh = null;
         try {
             $dbh = self::dbConnect();
-            return self::dbQuery($dbh);
+            return self::getAllFields($dbh);
 
         } catch(\Exception $e) {
             throw $e;
@@ -45,7 +53,7 @@ class FormFields
      * @return mixed
      * @throws Exception
      */
-    protected static function dbQuery($dbh)
+    protected static function getAllFields($dbh)
     {
         if (empty($dbh)) {
            throw new Exception('Could not connect with database.');
@@ -73,6 +81,32 @@ class FormFields
 
     }
 
+    protected static function getField($field)
+    {
+        if (empty($dbh)) {
+            throw new Exception('Could not connect with database.');
+        }
+
+        $sql = "SELECT $field
+        FROM " . DB_FORM_TABLE . "
+        ORDER BY `order` ASC";
+
+        try {
+            return self::selectQuery($dbh, $sql);
+
+        } catch(Exception $e) {
+            throw $e;
+
+        }
+
+    }
+
+    /**
+     * @param $fieldArray
+     * @return mixed
+     * @throws \Exception
+     * @todo make protected and have a controller make it callable
+     */
     public static function writeFields($fieldArray)
     {
         $dbh = null;
@@ -80,7 +114,7 @@ class FormFields
             $dbh = self::dbConnect();
             return self::insertFieldsIntoDb($dbh, $fieldArray);
 
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             throw $e;
         }
     }
@@ -151,13 +185,6 @@ class FormFields
 
         $numFields = count($sqlFieldData);
 
-        try {
-            SanitizeData::checkRequired($sqlFields, $sqlFieldData, $numFields);
-
-        } catch(\Exception $e)  {
-            throw $e;
-        }
-
         $preparedValues = '?';
         for($i = 1; $i < $numFields; $i++) {
             $preparedValues .= ', ?';
@@ -166,13 +193,16 @@ class FormFields
         //need string for SQL query field names
         $sqlFields = implode(', ', $sqlFields);
 
+        date_default_timezone_set('UTC');
+
         try {
             $sql = "
-                INSERT INTO . " . DB_FORM_DATA . "($sqlFields)
-                VALUES ($preparedValues);
+                INSERT INTO " . DB_FORM_DATA . "($sqlFields, added)
+                VALUES ($preparedValues, ?);
             ";
 
             $query = $dbh->prepare($sql);
+            array_push($sqlFieldData, time());
             $pdoResult = $query->execute($sqlFieldData);
             $dbh = null;
 
