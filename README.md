@@ -12,7 +12,6 @@ an email is sent out via PHP's mail() function.
 A thank you page is loaded up.
 
 
-
 Time is stored as epoch UTC time in the database when record is added.
 Time is stored as default MySql format (e.g. 2015-04-29 15:51:05) for modiefied date
 
@@ -26,19 +25,13 @@ const DB_PASS = '';
 const DB_FORM_TABLE = 'submission_form_contents';
 const DB_FORM_DATA = 'submission_data';
 
+@todo: backend validation for type of data. email, etc
 
 @todo: form validation--prefer JS validation to avoid another call to the server if invalid in addition to 
-
-@todo: backend validation
 @todo make protected and have a controller make it callable
-     */
-    public static function writeFields($fieldArray)
 I've created some db fields to help with identifying the type of field (for sanitizing/escaping)
 
 @todo: some parts of the code need to be rewritten to allow better code reuse
-
 @todo: add caching
-
 @todo: add routing
-
 @todo: get .htaccess to work
