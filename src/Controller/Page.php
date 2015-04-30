@@ -7,7 +7,7 @@ require_once(realpath(dirname(__FILE__) . '/..') . '/Helper/Smarty-3.1.21/libs/S
 /**
  * Class Page
  * @package Cleanify\Controller
- * @todo redesign smarty stuff out to allow code reuse
+ * @todo redesign smarty stuff out to allow code reuse w interface /di
  * @todo redesign pages, to reuse code
  */
 class Page
@@ -15,7 +15,7 @@ class Page
     protected $formFields;
     protected $smarty = null;
 
-    public function __construct($view = 'form')
+    public function __construct($view = 'form', $data = null)
     {
         $this->smarty = new \Smarty();
         $this->smarty->template_dir = realpath(dirname(__FILE__) . '/..') . '/View/templates/';
@@ -28,8 +28,11 @@ class Page
         }
 
         if ($view === 'thanks') {
-            //load thanks page
-            $this->displayStaticPage('thankYou.tpl');
+            $this->displayStaticPage('thankYou.tpl', $data);
+        }
+
+        if ($view === 'error') {
+            $this->displayStaticPage('error.tpl', $data);
         }
 
     }
@@ -49,10 +52,11 @@ class Page
      * @param $tpl
      * @param null $data
      */
-    public function displayStaticPage($tpl)
+    public function displayStaticPage($tpl, $data = null)
     {
+        $this->smarty->assign('data', $data);
         $this->smarty->display($tpl);
-        
+        die;
     }
 
 }

@@ -16,7 +16,7 @@ if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
         Cleanify\Controller\SanitizeData::checkType($sanitizedData, $type);
 
     } catch(\Exception $e) {
-        throw $e;
+        (new Cleanify\Controller\Page('error', $e->getMessage()));
     }
 
     //check if it's required and not empty
@@ -24,8 +24,7 @@ if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
         Cleanify\Controller\SanitizeData::checkRequiredAndNotEmpty($sanitizedData, $type);
 
     } catch(Exception $e) {
-        throw $e;
-
+        (new Cleanify\Controller\Page('error', $e->getMessage()));
     }
 
     //TODO: validate fields
@@ -34,16 +33,17 @@ if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
         Cleanify\Model\FormFields::writeFields($sanitizedData);
 
     } catch(Exception $e){
-        throw $e;
+        (new Cleanify\Controller\Page('error', $e->getMessage()));
 
     }
-
 
     //send email of form submitted
     try {
         Cleanify\Controller\Email::sendEmail($sanitizedData);
+
     } catch (\Exception $e) {
-        throw $e;
+        (new Cleanify\Controller\Page('error', $e->getMessage()));
+
     }
 
     (new Cleanify\Controller\Page('thanks'));

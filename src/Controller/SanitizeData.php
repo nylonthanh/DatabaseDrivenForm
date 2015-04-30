@@ -31,21 +31,27 @@ class SanitizeData
     }
 
     /**
-     * @return bool
-     * @todo: build this out!
+     * @param $data payload, form POST values
+     * @param $dataType
+     * @throws \Exception
      */
     public static function checkRequiredAndNotEmpty($data, $dataType)
     {
+        var_dump($data);die;
         if ($dataType !== 'array') {
             throw new \Exception('Form submission error: Failed Type comparison; Expecting type array.');
 
         }
 
         try {
-            return array_walk($data, function(&$data, $index)
+            $allFieldNamesArray = \Cleanify\Model\FormFields::get();
+            array_walk($data, function(&$data, $index, $allFieldNamesArray)
             {
-                return (self::isRequired($index) && !empty($data));
-            });
+                if (self::isRequired($index, $allFieldNamesArray) && empty($data)) {
+                    (new \Cleanify\Controller\Page('error', "Form Error: required field(s) not completed, including: $index."));
+
+                }
+            }, $allFieldNamesArray);
 
         } catch(\Exception $e) {
             throw $e;
@@ -57,13 +63,21 @@ class SanitizeData
     /**
      * check if fieldName has a required field
      * @param $fieldName
-     * @returns bool
-     * @throws \Cleanify\Model\Exception
+     * @param $allFieldNamesArray
+     * @throws \Exception
      */
-    public static function isRequired($fieldName)
+    public static function isRequired($fieldName,  $allFieldNamesArray)
     {
-        $fieldNameArray = \Cleanify\Model\FormFields::get();
+        foreach($allFieldNamesArray as $fieldIndex => $value) {
+                foreach($value as $key => $field) {
+                    if ($key === 'field_name' && $field === $fieldName) {
+                        return $value['required'];
 
+                    }
+                }
+        }
+
+        return false;
 
     }
 }
