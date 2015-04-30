@@ -37,7 +37,6 @@ class SanitizeData
      */
     public static function checkRequiredAndNotEmpty($data, $dataType)
     {
-        var_dump($data);die;
         if ($dataType !== 'array') {
             throw new \Exception('Form submission error: Failed Type comparison; Expecting type array.');
 

@@ -9,7 +9,7 @@
                 {strip}
                     <tr bgcolor="{cycle values="#eeeeee,#dddddd"}">
                         <td>{$formField.field_value}</td>
-                        <td><input type="{$formField.input_type}" name="{$formField.field_name}" id="{$formField.field_name}" value="{$formField.form_value|default: ''}"></td>
+                        <td><input type="{$formField.input_type}" name="{$formField.field_name}" id="{$formField.field_name}" value="{$formField.form_value|default: ''}" {$formField.required_html|default: ''}></td>
                     </tr>
                 {/strip}
             {/foreach}

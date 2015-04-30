@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.24)
 # Database: cleanify
-# Generation Time: 2015-04-29 09:01:49 +0000
+# Generation Time: 2015-04-30 06:23:37 +0000
 # ************************************************************
 
 
@@ -31,15 +31,6 @@ CREATE TABLE `config` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `config` WRITE;
-/*!40000 ALTER TABLE `config` DISABLE KEYS */;
-
-INSERT INTO `config` (`id`, `email`)
-VALUES
-	(1,'thanh.pham@yahoo.com');
-
-/*!40000 ALTER TABLE `config` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table submission_data
@@ -60,7 +51,7 @@ CREATE TABLE `submission_data` (
   `best_time_to_contact` varchar(32) NOT NULL DEFAULT '',
   `best_day_to_contact` varchar(32) NOT NULL,
   `tos` tinyint(1) NOT NULL DEFAULT '0',
-  `added` timestamp NULL DEFAULT NULL,
+  `added` int(128) NOT NULL,
   `modified` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
@@ -74,27 +65,7 @@ LOCK TABLES `submission_data` WRITE;
 
 INSERT INTO `submission_data` (`id`, `first_name`, `last_name`, `email`, `city`, `state`, `zip`, `phone`, `fax`, `best_time_to_contact`, `best_day_to_contact`, `tos`, `added`, `modified`)
 VALUES
-	(1,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(2,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(3,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(4,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(5,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(6,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(7,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(8,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(9,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(10,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(11,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(12,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(13,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(14,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(15,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(16,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(17,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(18,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(19,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(20,'asfd','asfd','asfd','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,NULL,NULL),
-	(21,'','','','','','','','','','',0,NULL,NULL);
+	(78,'Thanh','Pham','nylonthanh@yahoo.com','San Bruno','CA','94066','asdf','','asdf','asdf',1,1430374521,NULL);
 
 /*!40000 ALTER TABLE `submission_data` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -113,25 +84,27 @@ CREATE TABLE `submission_form_contents` (
   `filter_sanatize_type` varchar(64) NOT NULL DEFAULT '',
   `required` tinyint(1) NOT NULL DEFAULT '1',
   `form_value` varchar(64) DEFAULT '',
+  `required_html` varchar(8) DEFAULT '',
   UNIQUE KEY `order` (`order`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `submission_form_contents` WRITE;
 /*!40000 ALTER TABLE `submission_form_contents` DISABLE KEYS */;
 
-INSERT INTO `submission_form_contents` (`order`, `field_name`, `field_value`, `input_type`, `filter_sanatize_type`, `required`, `form_value`)
+INSERT INTO `submission_form_contents` (`order`, `field_name`, `field_value`, `input_type`, `filter_sanatize_type`, `required`, `form_value`, `required_html`)
 VALUES
-	(1,'first_name','First Name','input','STRING',1,''),
-	(2,'last_name','Last Name','input','STRING',1,''),
-	(3,'email','Email','input','EMAIL',1,''),
-	(4,'city','City','input','STRING',1,''),
-	(5,'state','State','input','STRING',1,''),
-	(6,'zip','Zip Code','input','STRING',1,''),
-	(7,'phone','Phone','input','STRING',1,''),
-	(8,'fax','Fax','input','STRING',0,''),
-	(9,'best_time_to_contact','Best Time to Contact','input','STRING',1,''),
-	(10,'best_day_to_contact','Best Day to Contact You','input','STRING',1,''),
-	(11,'tos','Do you agree to the terms of serivce?','checkbox','NUMBER_INT',1,'1');
+	(1,'first_name','First Name','input','STRING',1,'','required'),
+	(2,'last_name','Last Name','input','STRING',1,'','required'),
+	(3,'email','Email','input','EMAIL',1,'','required'),
+	(4,'city','City','input','STRING',1,'','required'),
+	(5,'state','State','input','STRING',1,'','required'),
+	(6,'zip','Zip Code','input','STRING',1,'','required'),
+	(7,'phone','Phone','input','STRING',1,'','required'),
+	(8,'fax','Fax','input','STRING',0,'',''),
+	(9,'best_time_to_contact','Best Time to Contact','input','STRING',1,'','required'),
+	(10,'best_day_to_contact','Best Day to Contact You','input','STRING',1,'','required'),
+	(11,'tos','','hidden','NUMBER_INT',0,'0',''),
+	(12,'tos','Do you agree to the terms of serivce?','checkbox','NUMBER_INT',1,'1','required');
 
 /*!40000 ALTER TABLE `submission_form_contents` ENABLE KEYS */;
 UNLOCK TABLES;
