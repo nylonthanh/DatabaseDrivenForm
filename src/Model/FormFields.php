@@ -150,7 +150,7 @@ class FormFields
         foreach ($columnArray as $columnIndex => $columnValue) {
            foreach($columnValue as $fieldName => $fieldValue) {
                 if ($fieldName === 'COLUMN_NAME') {
-                    $columnName .= " `$fieldValue`,";
+                    $columnName .=  ' `'. htmlentities($fieldValue) . "`,";
                 }
            }
         }

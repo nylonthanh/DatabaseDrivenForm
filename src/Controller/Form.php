@@ -35,7 +35,7 @@ class Form
      */
     public function getFormFields()
     {
-        
+
         return Model\FormFields::get();
 
     }

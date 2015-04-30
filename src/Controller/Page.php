@@ -40,7 +40,8 @@ class Page
     public function displayFormFields($formArray)
     {
         if (empty($formArray)) {
-            die('empty config');
+            (new \Cleanify\Controller\Page('error', 'Form config was empty. :( Please tell the admin!'));
+
         }
 
         (new Form)->display('form.tpl', $formArray, 'index.php');
