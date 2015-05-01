@@ -2,8 +2,19 @@
 
 namespace Cleanify\Controller;
 
+use Cleanify\Model as Model;
+
 class SanitizeData
 {
+    protected $formFieldsObject;
+
+    public function __construct()
+    {
+        //the formFieldObject is dependent on a db connection
+        $this->$formFieldObject = new Model\FormFields((new Model\DbConnection())->connection());
+
+    }
+
     /**
      * This will check if the subject passed in is the type anticipated
      * @param $subject
@@ -35,7 +46,7 @@ class SanitizeData
      * @param $dataType
      * @throws \Exception
      */
-    public static function checkRequiredAndNotEmpty($data, $dataType)
+    public function checkRequiredAndNotEmpty($data, $dataType)
     {
         if ($dataType !== 'array') {
             throw new \Exception('Form submission error: Failed Type comparison; Expecting type array.');
@@ -43,11 +54,11 @@ class SanitizeData
         }
 
         try {
-            $allFieldNamesArray = \Cleanify\Model\FormFields::get();
+            $allFieldNamesArray = $this->$formFieldObject->get();
             array_walk($data, function(&$data, $index, $allFieldNamesArray)
             {
                 if (self::isRequired($index, $allFieldNamesArray) && empty($data)) {
-                    (new \Cleanify\Controller\Page('error', "Form Error: required field(s) not completed, including: $index."));
+                    (new Page('error', "Form Error: required field(s) not completed, including: $index."));
 
                 }
             }, $allFieldNamesArray);

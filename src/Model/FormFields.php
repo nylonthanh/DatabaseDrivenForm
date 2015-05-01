@@ -34,7 +34,7 @@ class FormFields
 
         if ($_fieldName === null) {
             try {
-                return $this->getAllFields($this->dbConnection);
+                return $this->getAllFields();
 
             } catch(\Exception $e) {
                 throw $e;
@@ -81,9 +81,9 @@ class FormFields
      * @return mixed
      * @throws \Exception
      */
-    protected function getAllFields($dbConnection, $orderBy = 'order', $orderByValue = 'ASC')
+    protected function getAllFields($orderBy = 'order', $orderByValue = 'ASC')
     {
-        if (empty($dbConnection)) {
+        if (empty($this->dbConnection)) {
            throw new \Exception('Could not connect with database.');
         }
 
@@ -121,7 +121,7 @@ class FormFields
 
         } catch(\Exception $e) {
             throw $e;
-            
+
         }
 
     }

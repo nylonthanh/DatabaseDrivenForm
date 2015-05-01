@@ -15,9 +15,13 @@ require_once(realpath(dirname(__FILE__) . '/..') . '/Helper/Smarty-3.1.21/libs/S
 class Form
 {
     protected $smarty = null;
+    protected $formFieldObject;
 
     public function __construct()
     {
+        //the formFieldObject is dependent on a db connection
+        $this->$formFieldObject = new Model\FormFields((new Model\DbConnection())->connect());
+
         $this->smarty = new \Smarty();
         $this->smarty->template_dir = realpath(dirname(__FILE__) . '/..') . '/View/templates/';
         $this->smarty->compile_dir = realpath(dirname(__FILE__) . '/..') . '/View/templates_c/';
@@ -37,14 +41,20 @@ class Form
      */
     public function getFormFields()
     {
-        return Model\FormFields::get();
+        try {
+            return $this->$formFieldObject->get();
+
+        } catch(\Exception $e) {
+            throw $e;
+
+        }
 
     }
 
-    public static function writeFieldsToDb($formData)
+    public function writeFieldsToDb($formData)
     {
         try {
-            \Cleanify\Model\FormFields::writeFields($formData);
+            return $this->$formFieldObject->writeFields($formData);
 
         } catch(\Exception $e) {
             throw $e;
