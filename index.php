@@ -11,10 +11,12 @@ ini_set('display_errors', 1);
 $sanitizedData  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
 if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
-    $type = 'array';
+    $sanitizeDataObject = new Cleanify\Controller\SanitizeData();
+
+    $type = gettype($sanitizedData);
     //check sanitize data, check $sanitizedData data type is an array
     try {
-        Cleanify\Controller\SanitizeData::checkType($sanitizedData, $type);
+        $sanitizeDataObject->checkType($sanitizedData, $type);
 
     } catch(\Exception $e) {
         (new Cleanify\Controller\Page('error', $e->getMessage()));
@@ -22,7 +24,7 @@ if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
     }
 
     try {
-        Cleanify\Controller\SanitizeData::checkRequiredAndNotEmpty($sanitizedData, $type);
+        $sanitizeDataObject->checkRequiredAndNotEmpty($sanitizedData, $type);
 
     } catch(\Exception $e) {
         (new Cleanify\Controller\Page('error', $e->getMessage()));
@@ -38,7 +40,7 @@ if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
     }
 
     try {
-        Cleanify\Controller\Email::sendEmail($sanitizedData);
+        (new Cleanify\Controller\Email())->sendEmail($sanitizedData);
 
     } catch (\Exception $e) {
         (new Cleanify\Controller\Page('error', $e->getMessage()));

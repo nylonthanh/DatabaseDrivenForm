@@ -8,7 +8,6 @@ require_once(realpath(dirname(__FILE__) . '/..') . '/Helper/Smarty-3.1.21/libs/S
  * Class Page
  * @package Cleanify\Controller
  * @todo redesign smarty stuff out to allow code reuse w interface /di
- * @todo redesign pages, to reuse code
  */
 class Page
 {

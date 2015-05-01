@@ -15,13 +15,19 @@ class SanitizeData
 
     }
 
+    public function __destruct()
+    {
+        $this->$formFieldObject = null;
+
+    }
+
     /**
      * This will check if the subject passed in is the type anticipated
      * @param $subject
      * @param $type
      * @return boolean
      */
-    public static function checkType($subject, $type)
+    public function checkType($subject, $type)
     {
         $execute = "is_$type";
         $errorLogPath = realpath(dirname(__FILE__) . '/../..') . '/config/errorLog.txt';
@@ -42,6 +48,7 @@ class SanitizeData
     }
 
     /**
+     * checks for tampering for the $_POST obj
      * @param $data payload, form POST values
      * @param $dataType
      * @throws \Exception
@@ -57,7 +64,7 @@ class SanitizeData
             $allFieldNamesArray = $this->$formFieldObject->get();
             array_walk($data, function(&$data, $index, $allFieldNamesArray)
             {
-                if (self::isRequired($index, $allFieldNamesArray) && empty($data)) {
+                if ($this->isRequired($index, $allFieldNamesArray) && empty($data)) {
                     (new Page('error', "Form Error: required field(s) not completed, including: $index."));
 
                 }
@@ -76,7 +83,7 @@ class SanitizeData
      * @param $allFieldNamesArray
      * @throws \Exception
      */
-    public static function isRequired($fieldName,  $allFieldNamesArray)
+    public function isRequired($fieldName,  $allFieldNamesArray)
     {
         foreach($allFieldNamesArray as $fieldIndex => $value) {
                 foreach($value as $key => $field) {

@@ -15,6 +15,12 @@ class FormFields
 
     }
 
+    public function __destruct()
+    {
+        $this->$formFieldObject = null;
+
+    }
+
     /**
      * purpose: to get form field(s) from database
      * returns all if no arguments, otherwise will return according to the field passed in
@@ -44,6 +50,23 @@ class FormFields
 
         try {
             return $this->getField($_fieldName);
+
+        } catch(\Exception $e) {
+            throw $e;
+
+        }
+
+    }
+
+    /**
+     * @param $fieldArray
+     * @return mixed
+     * @throws \Exception
+     */
+    public function writeFields($fieldArray)
+    {
+        try {
+            return $this->insertFieldsIntoDb($fieldArray);
 
         } catch(\Exception $e) {
             throw $e;
@@ -101,23 +124,6 @@ class FormFields
 
         try {
             return $this->selectQuery($sql);
-
-        } catch(\Exception $e) {
-            throw $e;
-
-        }
-
-    }
-
-    /**
-     * @param $fieldArray
-     * @return mixed
-     * @throws \Exception
-     */
-    public function writeFields($fieldArray)
-    {
-        try {
-            return $this->insertFieldsIntoDb($fieldArray);
 
         } catch(\Exception $e) {
             throw $e;
