@@ -43,7 +43,7 @@ class FormFields
 
         } catch (PDOException $e) {
             error_log("Connection failed: " . $e->getMessage(), 3, "../errorLog.txt");
-            throw new Exception("DB Error: Connection failed: " . $e->getMessage());
+            throw new \Exception("DB Error: Connection failed: " . $e->getMessage());
         }
 
     }
@@ -51,12 +51,12 @@ class FormFields
     /**
      * @param $dbh
      * @return mixed
-     * @throws Exception
+     * @throws \Exception
      */
     protected static function getAllFields($dbh)
     {
         if (empty($dbh)) {
-           throw new Exception('Could not connect with database.');
+           throw new \Exception('Could not connect with database.');
         }
 
         try {
@@ -74,7 +74,7 @@ class FormFields
         try {
             return self::selectQuery($dbh, $sql);
 
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             throw $e;
 
         }
@@ -84,7 +84,7 @@ class FormFields
     protected static function getField($field)
     {
         if (empty($dbh)) {
-            throw new Exception('Could not connect with database.');
+            throw new \Exception('Could not connect with database.');
         }
 
         $sql = "SELECT $field
@@ -94,7 +94,7 @@ class FormFields
         try {
             return self::selectQuery($dbh, $sql);
 
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             throw $e;
 
         }
@@ -208,10 +208,11 @@ class FormFields
 
             return $pdoResult;
 
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             throw new \Exception("DB Error: $e->getMessage()");
 
         }
+
     }
 
     /**
@@ -231,10 +232,12 @@ class FormFields
 
             return $result;
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             error_log("DB Query Error: " . $e->getMessage(), 3, "../errorLog.txt");
-            throw new Exception("DB Error: $e->getMessage()");
+            throw new \Exception("DB Error: $e->getMessage()");
 
         }
+
     }
+
 }

@@ -27,7 +27,7 @@ class Email
             mail(EMAIL_FORM, self::$subject, $formString);
         } catch(\Exception $e) {
             error_log("Email failed: " . $e->getMessage(), 3, realpath(dirname(__FILE__) . '/..') . '/config/errorLog.txt');
-            throw new Exception("Email Error: $e->getMessage()");
+            throw new \Exception("Email Error: $e->getMessage()");
         }
 
     }

@@ -22,14 +22,14 @@ if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
     try {
         Cleanify\Controller\SanitizeData::checkRequiredAndNotEmpty($sanitizedData, $type);
 
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         (new Cleanify\Controller\Page('error', $e->getMessage()));
     }
 
     try {
-        Cleanify\Model\FormFields::writeFields($sanitizedData);
+        Cleanify\Controller\Form::writeFieldsToDb($sanitizedData);
 
-    } catch(Exception $e){
+    } catch(\Exception $e){
         (new Cleanify\Controller\Page('error', $e->getMessage()));
 
     }
