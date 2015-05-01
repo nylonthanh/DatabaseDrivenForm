@@ -10,14 +10,8 @@ class FormFields
 {
     protected $dbConnection;
 
-    public function __construct (ConnectionInterface $dbConnection){
+    public function __construct ($dbConnection){
         $this->dbConnection = $dbConnection;
-
-    }
-
-    public function __destruct()
-    {
-        $this->$formFieldObject = null;
 
     }
 
@@ -38,7 +32,7 @@ class FormFields
 
         }
 
-        if ($_fieldName === null) {
+        if (empty($_fieldName)) {
             try {
                 return $this->getAllFields();
 
@@ -236,10 +230,10 @@ class FormFields
      * @return mixed
      * @throws \Exception
      */
-    protected function selectQuery($query)
+    protected function selectQuery($sqlQuery)
     {
         try {
-            $query = $this->dbConnection->prepare($query);
+            $query = $this->dbConnection->prepare($sqlQuery);
             $query->execute();
             $result = $query->fetchAll();
             $this->dbConnection = null;

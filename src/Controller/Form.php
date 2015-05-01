@@ -20,7 +20,7 @@ class Form
     public function __construct()
     {
         //the formFieldObject is dependent on a db connection
-        $this->$formFieldObject = new Model\FormFields((new Model\DbConnection())->connect());
+        $this->formFieldObject = new Model\FormFields((new Model\DbConnection())->connect());
 
         $this->smarty = new \Smarty();
         $this->smarty->template_dir = realpath(dirname(__FILE__) . '/..') . '/View/templates/';
@@ -42,7 +42,7 @@ class Form
     public function getFormFields()
     {
         try {
-            return $this->$formFieldObject->get();
+            return $this->formFieldObject->get();
 
         } catch(\Exception $e) {
             throw $e;

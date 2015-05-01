@@ -15,12 +15,6 @@ class SanitizeData
 
     }
 
-    public function __destruct()
-    {
-        $this->$formFieldObject = null;
-
-    }
-
     /**
      * This will check if the subject passed in is the type anticipated
      * @param $subject
