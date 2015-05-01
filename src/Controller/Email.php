@@ -2,7 +2,7 @@
 
 namespace Cleanify\Controller;
 
-CONST EMAIL_FORM = 'thanh.pham@yahoo.com';
+require_once(realpath(dirname(__FILE__) . '/../..') . '/config/config.php');
 
 class Email
 {
