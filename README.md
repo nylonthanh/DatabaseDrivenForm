@@ -9,31 +9,30 @@ Create a database-driven form.
 * PHP/MySQL db is running (on PHP 5.6.6, MySQL 5.5.42)
 * config/config.php must be created and add constants -DB info, email, etc (.gitignore)
 
-> const SERVER_NAME = '127.0.0.1';
-> const DB_NAME = '';
-> const DB_USER = '';
-> const DB_PASS = '';
-
-> const DB_FORM_TABLE = 'submission_form_contents';
-> const DB_FORM_DATA = 'submission_data';
+ const SERVER_NAME = '127.0.0.1';
+ const DB_NAME = '';
+ const DB_USER = '';
+ const DB_PASS = '';
+ const DB_FORM_TABLE = 'submission_form_contents';
+ const DB_FORM_DATA = 'submission_data';
  
-> const EMAIL_FORM = 'you@example.com';
-
+ const EMAIL_FORM = 'you@example.com';
+ 
 ## Directions: 
 
-> 1.) visit index.php to load up the main page (form)
+ 1.) visit index.php to load up the main page (form)
  
-> 2.) The form is dynamically generated according to the database and the order number.
+ 2.) The form is dynamically generated according to the database and the order number.
  
-> 3.) After a form is submitted, data is stored and 
+ 3.) After a form is submitted, data is stored and 
  
-> 4.) an email is sent out via PHP's mail() function.
+ 4.) an email is sent out via PHP's mail() function.
  
-> 5.) A thank you page is loaded up.
+ 5.) A thank you page is loaded up.
  
-> *.) error page loaded up 
+ *.) error page loaded up 
  
-> *.) requires something in the fields to be submitted (both backend and HTML validation)
+ *.) requires something in the fields to be submitted (both backend and HTML validation)
 
 ## NOTES:
 
