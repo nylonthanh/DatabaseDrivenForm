@@ -4,6 +4,7 @@ include 'vendor/autoload.php';
 
 /**
  * This is the client, will load up logic
+ * Default page controller loads at the end
  */
 ini_set('display_errors', 1);
 
@@ -17,6 +18,7 @@ if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
 
     } catch(\Exception $e) {
         (new Cleanify\Controller\Page('error', $e->getMessage()));
+
     }
 
     try {
@@ -24,6 +26,7 @@ if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
 
     } catch(\Exception $e) {
         (new Cleanify\Controller\Page('error', $e->getMessage()));
+
     }
 
     try {
@@ -49,5 +52,3 @@ if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
     (new Cleanify\Controller\Page());
 
 }
-
-

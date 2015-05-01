@@ -21,6 +21,7 @@ class Form
         $this->smarty = new \Smarty();
         $this->smarty->template_dir = realpath(dirname(__FILE__) . '/..') . '/View/templates/';
         $this->smarty->compile_dir = realpath(dirname(__FILE__) . '/..') . '/View/templates_c/';
+
     }
 
     public function display($tpl, $data = null, $url = 'src/Controller/Form.php')
@@ -28,6 +29,7 @@ class Form
         $this->smarty->assign('formData', $data);
         $this->smarty->assign('formUrl', $url);
         $this->smarty->display($tpl);
+
     }
 
     /**

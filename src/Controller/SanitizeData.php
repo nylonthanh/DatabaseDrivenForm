@@ -79,4 +79,5 @@ class SanitizeData
         return false;
 
     }
+
 }

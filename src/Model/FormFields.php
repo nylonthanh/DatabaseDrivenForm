@@ -19,10 +19,6 @@ class FormFields
      */
     public static function get($fieldName = null)
     {
-//        if ($cached) {
-//            return $cached;
-//        }
-
         $dbh = null;
         try {
             $dbh = self::dbConnect();
@@ -30,6 +26,7 @@ class FormFields
 
         } catch(\Exception $e) {
             throw $e;
+
         }
 
     }
@@ -44,6 +41,7 @@ class FormFields
         } catch (PDOException $e) {
             error_log("Connection failed: " . $e->getMessage(), 3, "../errorLog.txt");
             throw new \Exception("DB Error: Connection failed: " . $e->getMessage());
+
         }
 
     }

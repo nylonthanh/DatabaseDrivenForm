@@ -58,6 +58,7 @@ class Page
         $this->smarty->assign('data', $data);
         $this->smarty->display($tpl);
         die;
+
     }
 
 }
