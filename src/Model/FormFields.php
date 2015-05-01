@@ -2,15 +2,12 @@
 
 namespace Cleanify\Model;
 
-use Cleanify\Controller\SanitizeData;
-
 /**
  * Class FormFields
  * @package Cleanify\Model
  */
 class FormFields
 {
-
     protected $dbConnection;
 
     public function __construct (ConnectionInterface $dbConnection){
@@ -26,9 +23,7 @@ class FormFields
      */
     public function get($fieldName = null)
     {
-        $dbh = null;
         try {
-//            $dbh = self::dbConnect();
             return $this->getAllFields($this->dbConnection);
 
         } catch(\Exception $e) {
@@ -38,34 +33,19 @@ class FormFields
 
     }
 
-    protected static function dbConnect()
-    {
-        try {
-            $dbh = new \PDO("mysql:host=" . SERVER_NAME . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
-            $dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            return $dbh;
-
-        } catch (PDOException $e) {
-            error_log("Connection failed: " . $e->getMessage(), 3, "../errorLog.txt");
-            throw new \Exception("DB Error: Connection failed: " . $e->getMessage());
-
-        }
-
-    }
-
     /**
-     * @param $dbh
+     * @param $dbConnection
      * @return mixed
      * @throws \Exception
      */
-    protected function getAllFields($dbh)
+    protected function getAllFields($dbConnection)
     {
-        if (empty($dbh)) {
+        if (empty($dbConnection)) {
            throw new \Exception('Could not connect with database.');
         }
 
         try {
-            $dbFieldNames = self::getDbFieldNames($dbh);
+            $dbFieldNames = self::getDbFieldNames($dbConnection);
 
         } catch (\Exception $e) {
             throw $e;
@@ -77,7 +57,7 @@ class FormFields
             ORDER BY `order` ASC";
 
         try {
-            return self::selectQuery($dbh, $sql);
+            return self::selectQuery($dbConnection, $sql);
 
         } catch(\Exception $e) {
             throw $e;
