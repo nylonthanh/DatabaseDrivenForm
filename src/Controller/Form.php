@@ -35,9 +35,19 @@ class Form
      */
     public function getFormFields()
     {
-
         return Model\FormFields::get();
 
+    }
+
+    public static function writeFieldsToDb($formData)
+    {
+        try {
+            \Cleanify\Model\FormFields::writeFields($formData);
+
+        } catch(\Exception $e) {
+            throw $e;
+
+        }
     }
 
 }
