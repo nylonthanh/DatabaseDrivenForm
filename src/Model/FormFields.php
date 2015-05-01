@@ -16,7 +16,8 @@ class FormFields
     }
 
     /**
-     * purpose: to get form fields from database
+     * purpose: to get form field(s) from database
+     * returns all if no arguments, otherwise will return according to the field passed in
      * @return mixed
      * @throws \Exception
      * @todo: add caching
@@ -24,7 +25,25 @@ class FormFields
     public function get($fieldName = null)
     {
         try {
-            return $this->getAllFields($this->dbConnection);
+            $_fieldName = filter_var($fieldName, FILTER_SANITIZE_STRING);
+
+        } catch(\Exception $e) {
+            throw new \Exception('Sorry! Only accepting single fields or empty.');
+
+        }
+
+        if ($_fieldName === null) {
+            try {
+                return $this->getAllFields($this->dbConnection);
+
+            } catch(\Exception $e) {
+                throw $e;
+
+            }
+        }
+
+        try {
+            return $this->getField($_fieldName);
 
         } catch(\Exception $e) {
             throw $e;
@@ -34,41 +53,13 @@ class FormFields
     }
 
     /**
-     * @param $dbConnection
+     * @param $field
      * @return mixed
      * @throws \Exception
      */
-    protected function getAllFields($dbConnection)
+    protected function getField($field)
     {
-        if (empty($dbConnection)) {
-           throw new \Exception('Could not connect with database.');
-        }
-
-        try {
-            $dbFieldNames = self::getDbFieldNames($dbConnection);
-
-        } catch (\Exception $e) {
-            throw $e;
-
-        }
-
-        $sql = "SELECT $dbFieldNames
-            FROM " . DB_FORM_TABLE . "
-            ORDER BY `order` ASC";
-
-        try {
-            return self::selectQuery($dbConnection, $sql);
-
-        } catch(\Exception $e) {
-            throw $e;
-
-        }
-
-    }
-
-    protected static function getField($field)
-    {
-        if (empty($dbh)) {
+        if (empty($this->dbConnection)) {
             throw new \Exception('Could not connect with database.');
         }
 
@@ -77,7 +68,39 @@ class FormFields
         ORDER BY `order` ASC";
 
         try {
-            return self::selectQuery($dbh, $sql);
+            return $this->selectQuery($sql);
+
+        } catch(\Exception $e) {
+            throw $e;
+
+        }
+
+    }
+    /**
+     * @param $dbConnection
+     * @return mixed
+     * @throws \Exception
+     */
+    protected function getAllFields($dbConnection, $orderBy = 'order', $orderByValue = 'ASC')
+    {
+        if (empty($dbConnection)) {
+           throw new \Exception('Could not connect with database.');
+        }
+
+        try {
+            $dbFieldNames = $this->getDbFieldNames();
+
+        } catch (\Exception $e) {
+            throw $e;
+
+        }
+
+        $sql = "SELECT $dbFieldNames
+            FROM " . DB_FORM_TABLE . "
+            ORDER BY `$orderBy` $orderByValue";
+
+        try {
+            return $this->selectQuery($sql);
 
         } catch(\Exception $e) {
             throw $e;
@@ -91,28 +114,27 @@ class FormFields
      * @return mixed
      * @throws \Exception
      */
-    public static function writeFields($fieldArray)
+    public function writeFields($fieldArray)
     {
-        $dbh = null;
         try {
-            $dbh = self::dbConnect();
-            return self::insertFieldsIntoDb($dbh, $fieldArray);
+            return $this->insertFieldsIntoDb($fieldArray);
 
         } catch(\Exception $e) {
             throw $e;
+            
         }
 
     }
 
     /**
      * returns array of column names
-     * intended for getting all the field names to build the form
-     * @param $dbh
+     * getting all the field names to build the form
+     * @param $dbConnection
      * @return mixed
      * @throws \Exception
      */
-    protected static function getDbFieldNames($dbh){
-        if (empty($dbh)) {
+    protected function getDbFieldNames(){
+        if (empty($this->dbConnection)) {
             throw new \Exception('Could not connect with database.');
         }
 
@@ -124,7 +146,7 @@ class FormFields
         ';
 
         try {
-            $columnArray = self::selectQuery($dbh, $query);
+            $columnArray = $this->selectQuery($query);
 
         } catch(\Exception $e) {
             throw $e;
@@ -146,15 +168,15 @@ class FormFields
 
     /**
      * does the DB insert of form data
-     * @param $dbh
+     * @param $dbConnection
      * @param $formData
      * @return mixed
      * @throws \Exception
      * @TODO refactor out methods, simplify
      */
-    protected static function insertFieldsIntoDb($dbh, $formData)
+    protected function insertFieldsIntoDb($formData)
     {
-        if (empty($dbh)) {
+        if (empty($this->dbConnection)) {
             $errorLogPath = realpath(dirname(__FILE__) . '/../..') . '/config/errorLog.txt';
             error_log("DB Error: not connect with database. " .
                 __METHOD__ .  " \n" . __LINE__, 3, $errorLogPath);
@@ -180,16 +202,17 @@ class FormFields
 
         date_default_timezone_set('UTC');
 
+        //added field is a timestamp in UTC when this is executed
         try {
             $sql = "
                 INSERT INTO " . DB_FORM_DATA . "($sqlFields, added)
                 VALUES ($preparedValues, ?);
             ";
 
-            $query = $dbh->prepare($sql);
+            $query = $this->dbConnection->prepare($sql);
             array_push($sqlFieldData, time());
             $pdoResult = $query->execute($sqlFieldData);
-            $dbh = null;
+            $this->dbConnection = null;
 
             return $pdoResult;
 
@@ -203,17 +226,17 @@ class FormFields
     /**
      * method meant to save some code / reuse
      * @param $dbh
-     * @param $sql
+     * @param $query
      * @return mixed
      * @throws \Exception
      */
-    protected static function selectQuery($dbh, $sql)
+    protected function selectQuery($query)
     {
         try {
-            $query = $dbh->prepare($sql);
+            $query = $this->dbConnection->prepare($query);
             $query->execute();
             $result = $query->fetchAll();
-            $dbh = null;
+            $this->dbConnection = null;
 
             return $result;
 

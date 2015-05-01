@@ -21,7 +21,7 @@ class DbConnection implements ConnectionInterface
             $dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             return $dbh;
 
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             error_log("Connection failed: " . $e->getMessage(), 3, "../errorLog.txt");
             throw new \Exception("DB Error: Connection failed: " . $e->getMessage());
 
