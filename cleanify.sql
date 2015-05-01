@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.24)
 # Database: cleanify
-# Generation Time: 2015-04-30 07:09:56 +0000
+# Generation Time: 2015-05-01 00:54:12 +0000
 # ************************************************************
 
 
@@ -18,45 +18,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-
-# Dump of table config
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `config`;
-
-CREATE TABLE `config` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `email` varchar(320) DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
-# Dump of table data_format_rule
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `data_format_rule`;
-
-CREATE TABLE `data_format_rule` (
-  `rule_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `rule_name` varchar(32) DEFAULT NULL,
-  `rule_value` varchar(64) DEFAULT NULL,
-  `rule_description` text,
-  PRIMARY KEY (`rule_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-LOCK TABLES `data_format_rule` WRITE;
-/*!40000 ALTER TABLE `data_format_rule` DISABLE KEYS */;
-
-INSERT INTO `data_format_rule` (`rule_id`, `rule_name`, `rule_value`, `rule_description`)
-VALUES
-	(1,'letters_only',NULL,'values can only contact letters only. No numbers or characters.'),
-	(2,'numeric_only',NULL,'values must be numeric'),
-	(3,NULL,NULL,NULL);
-
-/*!40000 ALTER TABLE `data_format_rule` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table submission_data
@@ -91,7 +52,14 @@ LOCK TABLES `submission_data` WRITE;
 
 INSERT INTO `submission_data` (`id`, `first_name`, `last_name`, `email`, `city`, `state`, `zip`, `phone`, `fax`, `best_time_to_contact`, `best_day_to_contact`, `tos`, `added`, `modified`)
 VALUES
-	(78,'Thanh','Pham','nylonthanh@yahoo.com','San Bruno','CA','94066','asdf','','asdf','asdf',1,1430374521,NULL);
+	(79,'Thanh','Pham','thanh.pham@yahoo.com','San Bruno','CA','94066','408 813 5166','n/a','2 PM','Wed',1,1430436550,NULL),
+	(80,'Thanh','Pham','asdf','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,1430437562,NULL),
+	(81,'move','the','email','to ','config','test','asfd','asdf','asdf','asdf',1,1430437865,NULL),
+	(82,'two','emails','asf','asf','asfd','asfd','asfd','asf','asfd','sdf',1,1430438099,NULL),
+	(83,'asdf','asfd','j','j','j','j','j','j','j','j',1,1430439570,NULL),
+	(84,'ok','robot','k','k','k','k','k','','k','k',1,1430439675,NULL),
+	(85,'ok','robot','k','k','k','k','k','','k','k',1,1430439824,NULL),
+	(86,'Thanh','Submission','for','Luis','I','hope','you','','like','this!',1,1430441420,NULL);
 
 /*!40000 ALTER TABLE `submission_data` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -107,31 +75,30 @@ CREATE TABLE `submission_form_contents` (
   `field_name` varchar(64) NOT NULL DEFAULT '',
   `field_value` varchar(64) NOT NULL DEFAULT '',
   `input_type` varchar(64) NOT NULL DEFAULT '',
-  `filter_sanatize_type` varchar(64) NOT NULL DEFAULT '',
   `required` tinyint(1) NOT NULL DEFAULT '1',
   `form_value` varchar(64) DEFAULT '',
   `required_html` varchar(8) DEFAULT '',
-  `data_format_rule` int(11) DEFAULT NULL,
-  UNIQUE KEY `order` (`order`)
+  UNIQUE KEY `order` (`order`),
+  KEY `field_name` (`field_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `submission_form_contents` WRITE;
 /*!40000 ALTER TABLE `submission_form_contents` DISABLE KEYS */;
 
-INSERT INTO `submission_form_contents` (`order`, `field_name`, `field_value`, `input_type`, `filter_sanatize_type`, `required`, `form_value`, `required_html`, `data_format_rule`)
+INSERT INTO `submission_form_contents` (`order`, `field_name`, `field_value`, `input_type`, `required`, `form_value`, `required_html`)
 VALUES
-	(1,'first_name','First Name','input','STRING',1,'','required',NULL),
-	(2,'last_name','Last Name','input','STRING',1,'','required',NULL),
-	(3,'email','Email','input','EMAIL',1,'','required',NULL),
-	(4,'city','City','input','STRING',1,'','required',NULL),
-	(5,'state','State','input','STRING',1,'','required',NULL),
-	(6,'zip','Zip Code','input','STRING',1,'','required',NULL),
-	(7,'phone','Phone','input','STRING',1,'','required',NULL),
-	(8,'fax','Fax','input','STRING',0,'','',NULL),
-	(9,'best_time_to_contact','Best Time to Contact','input','STRING',1,'','required',NULL),
-	(10,'best_day_to_contact','Best Day to Contact You','input','STRING',1,'','required',NULL),
-	(11,'tos','','hidden','NUMBER_INT',0,'0','',NULL),
-	(12,'tos','Do you agree to the terms of serivce?','checkbox','NUMBER_INT',1,'1','required',NULL);
+	(1,'first_name','First Name','input',1,'','required'),
+	(2,'last_name','Last Name','input',1,'','required'),
+	(3,'email','Email','input',1,'','required'),
+	(4,'city','City','input',1,'','required'),
+	(5,'state','State','input',1,'','required'),
+	(6,'zip','Zip Code','input',1,'','required'),
+	(7,'phone','Phone','input',1,'','required'),
+	(8,'fax','Fax','input',0,'',''),
+	(9,'best_time_to_contact','Best Time to Contact','input',1,'','required'),
+	(10,'best_day_to_contact','Best Day to Contact You','input',1,'','required'),
+	(11,'tos','','hidden',0,'0',''),
+	(12,'tos','Do you agree to the terms of serivce?','checkbox',1,'1','required');
 
 /*!40000 ALTER TABLE `submission_form_contents` ENABLE KEYS */;
 UNLOCK TABLES;
