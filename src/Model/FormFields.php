@@ -4,25 +4,32 @@ namespace Cleanify\Model;
 
 use Cleanify\Controller\SanitizeData;
 
-require_once(realpath(dirname(__FILE__) . '/../..') . '/config/config.php');
 /**
- * page class Controller
- * @todo: refactor methods to be more reusable - get getall, etc
+ * Class FormFields
+ * @package Cleanify\Model
  */
 class FormFields
 {
+
+    protected $dbConnection;
+
+    public function __construct (ConnectionInterface $dbConnection){
+        $this->dbConnection = $dbConnection;
+
+    }
+
     /**
      * purpose: to get form fields from database
      * @return mixed
      * @throws \Exception
      * @todo: add caching
      */
-    public static function get($fieldName = null)
+    public function get($fieldName = null)
     {
         $dbh = null;
         try {
-            $dbh = self::dbConnect();
-            return self::getAllFields($dbh);
+//            $dbh = self::dbConnect();
+            return $this->getAllFields($this->dbConnection);
 
         } catch(\Exception $e) {
             throw $e;
@@ -51,7 +58,7 @@ class FormFields
      * @return mixed
      * @throws \Exception
      */
-    protected static function getAllFields($dbh)
+    protected function getAllFields($dbh)
     {
         if (empty($dbh)) {
            throw new \Exception('Could not connect with database.');
