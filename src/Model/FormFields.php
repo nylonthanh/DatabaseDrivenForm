@@ -105,7 +105,6 @@ class FormFields
      * @param $fieldArray
      * @return mixed
      * @throws \Exception
-     * @todo make protected and have a controller make it callable
      */
     public static function writeFields($fieldArray)
     {
@@ -117,6 +116,7 @@ class FormFields
         } catch(\Exception $e) {
             throw $e;
         }
+
     }
 
     /**
@@ -219,7 +219,7 @@ class FormFields
      * @param $dbh
      * @param $sql
      * @return mixed
-     * @throws Exception
+     * @throws \Exception
      */
     protected static function selectQuery($dbh, $sql)
     {

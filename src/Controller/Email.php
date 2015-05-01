@@ -10,7 +10,7 @@ class Email
 
     /**
      * @param $formData
-     * @throws Exception
+     * @throws \Exception
      * @todo refactor to use interface to allow mailgun or other services
      */
     public static function sendEmail($formData)

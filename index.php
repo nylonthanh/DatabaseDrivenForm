@@ -3,7 +3,7 @@
 include 'vendor/autoload.php';
 
 /**
- * This is the client
+ * This is the client, will load up logic
  */
 ini_set('display_errors', 1);
 
@@ -19,7 +19,6 @@ if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
         (new Cleanify\Controller\Page('error', $e->getMessage()));
     }
 
-    //check if it's required and not empty
     try {
         Cleanify\Controller\SanitizeData::checkRequiredAndNotEmpty($sanitizedData, $type);
 
@@ -27,8 +26,6 @@ if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
         (new Cleanify\Controller\Page('error', $e->getMessage()));
     }
 
-    //TODO: validate fields
-    //TODO: use controller to write fields
     try {
         Cleanify\Model\FormFields::writeFields($sanitizedData);
 
@@ -37,7 +34,6 @@ if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
 
     }
 
-    //send email of form submitted
     try {
         Cleanify\Controller\Email::sendEmail($sanitizedData);
 
@@ -49,6 +45,7 @@ if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
     (new Cleanify\Controller\Page('thanks'));
 
 } else {
+    //default page, form
     (new Cleanify\Controller\Page());
 
 }
