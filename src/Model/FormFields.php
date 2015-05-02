@@ -36,6 +36,7 @@ class FormFields
             try {
                 return $this->getAllFields();
 
+
             } catch(\Exception $e) {
                 throw $e;
 
