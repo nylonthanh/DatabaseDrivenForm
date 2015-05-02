@@ -9,7 +9,7 @@ Create a database-driven form.
 * PHP/MySQL db is running (on PHP 5.6.6, MySQL 5.5.42)
 * config/config.php must be created and add constants -DB info, email, etc (.gitignore)
 
-/config/config.php sample ...
+/config/config.php sample 
  const SERVER_NAME = '127.0.0.1';
  const DB_NAME = '';
  const DB_USER = '';
@@ -18,7 +18,7 @@ Create a database-driven form.
  const DB_FORM_DATA = 'submission_data';
  
  const EMAIL_FORM = 'you@example.com';
- ...
+ 
  
 ## Directions: 
 
