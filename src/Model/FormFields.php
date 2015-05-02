@@ -78,6 +78,9 @@ class FormFields
     protected function getField($field, $orderBy = 'order', $orderByValue = 'ASC')
     {
         if (empty($this->dbConnection)) {
+            $errorLogPath = realpath(dirname(__FILE__) . '/../..') . '/config/errorLog.txt';
+            error_log("DB Connection Error: " . " \n" . __METHOD__ .  " \n Line: " .
+                __LINE__, 3, $errorLogPath);
             throw new \Exception('Could not connect with database.');
         }
 
@@ -102,6 +105,9 @@ class FormFields
     protected function getAllFields($orderBy = 'order', $orderByValue = 'ASC')
     {
         if (empty($this->dbConnection)) {
+            $errorLogPath = realpath(dirname(__FILE__) . '/../..') . '/config/errorLog.txt';
+            error_log("DB Connection Error: " . " \n" . __METHOD__ .  " \n Line: " .
+                __LINE__, 3, $errorLogPath);
            throw new \Exception('Could not connect with database.');
         }
 
@@ -217,6 +223,9 @@ class FormFields
             return $pdoResult;
 
         } catch(\Exception $e) {
+            $errorLogPath = realpath(dirname(__FILE__) . '/../..') . '/config/errorLog.txt';
+            error_log("DB Insert Error: " . $e->getMessage() . " \n" . __METHOD__ .  " \n Line: " .
+                __LINE__, 3, $errorLogPath);
             throw new \Exception("DB Error: $e->getMessage()");
 
         }
