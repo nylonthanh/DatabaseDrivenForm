@@ -179,7 +179,6 @@ class FormFields
      * @param $formData
      * @return mixed
      * @throws \Exception
-     * @TODO refactor out methods, simplify
      */
     protected function insertFieldsIntoDb($formData)
     {
@@ -199,10 +198,7 @@ class FormFields
 
         $numFields = count($sqlFieldData);
 
-        $preparedValues = '?';
-        for($i = 1; $i < $numFields; $i++) {
-            $preparedValues .= ', ?';
-        }
+        $preparedValues = $this->pdoPrepParams($numFields);
 
         //need string for SQL query field names
         $sqlFields = implode(', ', $sqlFields);
@@ -249,11 +245,27 @@ class FormFields
             return $result;
 
         } catch (\Exception $e) {
-            error_log("DB Query Error: " . $e->getMessage(), 3, "../errorLog.txt");
+            $errorLogPath = realpath(dirname(__FILE__) . '/../..') . '/config/errorLog.txt';
+                error_log("DB Query Error: " . $e->getMessage() . " \n" . __METHOD__ .  " \n Line: " .
+                    __LINE__, 3, $errorLogPath);
             throw new \Exception("DB Error: $e->getMessage()");
 
         }
 
+    }
+
+    /**
+     * @param $numFields
+     * @return string
+     */
+    protected function pdoPrepParams($numFields)
+    {
+        $preparedValues = '?';
+        for ($i = 1; $i < $numFields; $i++) {
+            $preparedValues .= ', ?';
+        }
+
+        return $preparedValues;
     }
 
 }
