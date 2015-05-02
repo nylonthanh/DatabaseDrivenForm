@@ -189,6 +189,7 @@ class FormFields
             throw new \Exception('Could not connect with database.');
         }
 
+        //parse form data
         $sqlFields = array_keys($formData);
         $sqlFieldData = array_values($formData);
 
@@ -200,12 +201,12 @@ class FormFields
 
         $preparedValues = $this->pdoPrepParams($numFields);
 
-        //need string for SQL query field names
+        //string required for SQL query field names
         $sqlFields = implode(', ', $sqlFields);
 
         date_default_timezone_set('UTC');
 
-        //added field is a timestamp in UTC when this is executed
+        //store 'added' field is a timestamp in UTC when this is executed
         try {
             $sql = "
                 INSERT INTO " . DB_FORM_DATA . "($sqlFields, added)
