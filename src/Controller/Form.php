@@ -4,13 +4,11 @@ namespace Cleanify\Controller;
 
 use Cleanify\Model as Model;
 
-require_once(realpath(dirname(__FILE__) . '/../..') . '/vendor/autoload.php');
 require_once(realpath(dirname(__FILE__) . '/..') . '/Helper/Smarty-3.1.21/libs/Smarty.class.php');
 
 /**
  * Class Form
  * @package Cleanify\Controller
- * @todo move smarty stuff out to allow reusable code
  */
 class Form
 {
@@ -28,6 +26,11 @@ class Form
 
     }
 
+    /**
+     * @param $tpl
+     * @param null $data
+     * @param string $url
+     */
     public function display($tpl, $data = null, $url = 'src/Controller/Form.php')
     {
         $this->smarty->assign('formData', $data);
@@ -38,6 +41,8 @@ class Form
 
     /**
      * get form fields by calling Model to get from DB to build form
+     * @return mixed
+     * @throws \Exception
      */
     public function getFormFields()
     {
@@ -51,6 +56,11 @@ class Form
 
     }
 
+    /**
+     * @param $formData
+     * @return mixed
+     * @throws \Exception
+     */
     public function writeFieldsToDb($formData)
     {
         try {

@@ -7,7 +7,6 @@ require_once(realpath(dirname(__FILE__) . '/../..') . '/config/config.php');
 /**
  * Class Email
  * @package Cleanify\Controlle
- * @todo refactor to use interface to allow mailgun or other services
  */
 class Email implements EmailInterface
 {

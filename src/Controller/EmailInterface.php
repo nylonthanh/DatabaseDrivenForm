@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Cleanify\Controller;
 
 
