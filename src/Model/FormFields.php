@@ -213,7 +213,6 @@ class FormFields
             $query = $this->dbConnection->prepare($sql);
             array_push($sqlFieldData, time());
             $pdoResult = $query->execute($sqlFieldData);
-            $this->dbConnection = null;
 
             return $pdoResult;
 
@@ -237,7 +236,6 @@ class FormFields
             $query = $this->dbConnection->prepare($sqlQuery);
             $query->execute();
             $result = $query->fetchAll();
-            $this->dbConnection = null;
 
             return $result;
 
