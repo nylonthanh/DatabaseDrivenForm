@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # http://code.google.com/p/sequel-pro/
 #
-# Host: 127.0.0.1 (MySQL 5.6.24)
-# Database: cleanify
-# Generation Time: 2015-05-01 00:54:12 +0000
+# Host: 127.0.0.1 (MySQL 5.5.42)
+# Database: Cleanify
+# Generation Time: 2015-05-02 07:13:48 +0000
 # ************************************************************
 
 
@@ -52,14 +52,17 @@ LOCK TABLES `submission_data` WRITE;
 
 INSERT INTO `submission_data` (`id`, `first_name`, `last_name`, `email`, `city`, `state`, `zip`, `phone`, `fax`, `best_time_to_contact`, `best_day_to_contact`, `tos`, `added`, `modified`)
 VALUES
-	(79,'Thanh','Pham','thanh.pham@yahoo.com','San Bruno','CA','94066','408 813 5166','n/a','2 PM','Wed',1,1430436550,NULL),
+	(79,'Thanh','Pham','fff','asfd','CA','asdf','asdfasdf','n/a','2 PM','Wed',1,1430436550,'2015-05-02 00:13:34'),
 	(80,'Thanh','Pham','asdf','asf','asdf','asdf','asdf','asdf','asdf','asdf',1,1430437562,NULL),
 	(81,'move','the','email','to ','config','test','asfd','asdf','asdf','asdf',1,1430437865,NULL),
 	(82,'two','emails','asf','asf','asfd','asfd','asfd','asf','asfd','sdf',1,1430438099,NULL),
 	(83,'asdf','asfd','j','j','j','j','j','j','j','j',1,1430439570,NULL),
 	(84,'ok','robot','k','k','k','k','k','','k','k',1,1430439675,NULL),
 	(85,'ok','robot','k','k','k','k','k','','k','k',1,1430439824,NULL),
-	(86,'Thanh','Submission','for','Luis','I','hope','you','','like','this!',1,1430441420,NULL);
+	(86,'Thanh','Submission','for','asdf','I','hope','you','','like','this!',1,1430441420,'2015-05-02 00:13:27'),
+	(87,'Thanh','Yo','dude','asdf','asdff','j','asf','jk','jk','kj',1,1430547211,NULL),
+	(88,'Thanh','Pham','yo','man','asdf','asdf','asdf','asdf','asdf','asdf',1,1430547236,NULL),
+	(89,'Thanh','Pham','asdf','asdf','CA','asdf','asdfasf','asdf','asf','asf',1,1430550469,'2015-05-02 00:13:35');
 
 /*!40000 ALTER TABLE `submission_data` ENABLE KEYS */;
 UNLOCK TABLES;
