@@ -30,7 +30,7 @@ if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
     }
 
     try {
-        Cleanify\Controller\Form::writeFieldsToDb($sanitizedData);
+        (new Cleanify\Controller\Form())->writeFieldsToDb($sanitizedData);
 
     } catch(\Exception $e){
         (new Cleanify\Controller\Page('error', $e->getMessage()));
