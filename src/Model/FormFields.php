@@ -194,6 +194,9 @@ class FormFields
         $sqlFieldData = array_values($formData);
 
         if (count($sqlFields) !== count($sqlFieldData)) {
+            $errorLogPath = realpath(dirname(__FILE__) . '/../..') . '/config/errorLog.txt';
+            error_log("Form Integrity Error: " . " \n" . __METHOD__ .  " \n Line: " .
+                __LINE__, 3, $errorLogPath);
             throw new \Exception('Form Error: number of elements in form do not match.');
         }
 
