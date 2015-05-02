@@ -6,8 +6,6 @@ include 'vendor/autoload.php';
  * This is the client, will load up logic
  * Default page controller loads at the end
  */
-ini_set('display_errors', 1);
-
 $sanitizedData  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
 if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
