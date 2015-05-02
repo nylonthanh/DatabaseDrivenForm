@@ -11,7 +11,7 @@ class SanitizeData
     public function __construct()
     {
         //the formFieldObject is dependent on a db connection
-        $this->$formFieldObject = new Model\FormFields((new Model\DbConnection())->connection());
+        $this->formFieldObject = new Model\FormFields((new Model\DbConnection())->connect());
 
     }
 
@@ -55,7 +55,7 @@ class SanitizeData
         }
 
         try {
-            $allFieldNamesArray = $this->$formFieldObject->get();
+            $allFieldNamesArray = $this->formFieldObject->get();
             array_walk($data, function(&$data, $index, $allFieldNamesArray)
             {
                 if ($this->isRequired($index, $allFieldNamesArray) && empty($data)) {

@@ -54,7 +54,7 @@ class Form
     public function writeFieldsToDb($formData)
     {
         try {
-            return $this->$formFieldObject->writeFields($formData);
+            return $this->formFieldObject->writeFields($formData);
 
         } catch(\Exception $e) {
             throw $e;
