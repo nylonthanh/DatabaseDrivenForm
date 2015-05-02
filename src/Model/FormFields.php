@@ -75,7 +75,7 @@ class FormFields
      * @return mixed
      * @throws \Exception
      */
-    protected function getField($field)
+    protected function getField($field, $orderBy = 'order', $orderByValue = 'ASC')
     {
         if (empty($this->dbConnection)) {
             throw new \Exception('Could not connect with database.');
@@ -83,7 +83,7 @@ class FormFields
 
         $sql = "SELECT $field
         FROM " . DB_FORM_TABLE . "
-        ORDER BY `order` ASC";
+        ORDER BY `$orderBy` $orderByValue;";
 
         try {
             return $this->selectQuery($sql);
@@ -115,7 +115,7 @@ class FormFields
 
         $sql = "SELECT $dbFieldNames
             FROM " . DB_FORM_TABLE . "
-            ORDER BY `$orderBy` $orderByValue";
+            ORDER BY `$orderBy` $orderByValue;";
 
         try {
             return $this->selectQuery($sql);
