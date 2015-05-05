@@ -10,6 +10,10 @@ session_regenerate_id(true);
  * Default page controller loads at the end
  */
 $sanitizedData  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+/**
+ * @todo: replace sizeof with a method to double check rather than hard code
+ */
+
 if (isset($sanitizedData) && sizeof($sanitizedData) == 11) {
     $sanitizeDataObject = new Cleanify\Controller\SanitizeData();
 
