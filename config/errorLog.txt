@@ -12,4 +12,6 @@ INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Contro
 23INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Controller\SanitizeData::checkType 
 23INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Controller\SanitizeData::checkType 
 23INTEGRITY ERROR: $_POST does not match anticipated type, arrsay. Cleanify\Controller\SanitizeData::checkType 
-23
+23DB Insert Error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'test' in 'field list' 
+Cleanify\Model\FormFields::insertFieldsIntoDb 
+ Line: 228

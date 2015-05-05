@@ -38,6 +38,7 @@ class Email implements EmailInterface
 
         try {
             mail($this->emailTo, $this->subject, $formString);
+            return true;
 
         } catch(\Exception $e) {
             error_log("Email failed: " . $e->getMessage(), 3, realpath(dirname(__FILE__) . '/..') . '/config/errorLog.txt');
