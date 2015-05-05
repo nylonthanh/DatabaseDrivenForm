@@ -8,7 +8,10 @@ include 'vendor/autoload.php';
  */
 $sanitizedData  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
+/**
+ * @todo: replace sizeof with a method to double check rather than hard code
+ */
+if (isset($sanitizedData) && sizeof($sanitizedData) > 11) {
     $sanitizeDataObject = new Cleanify\Controller\SanitizeData();
 
     $type = gettype($sanitizedData);
