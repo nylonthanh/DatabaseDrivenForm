@@ -2,13 +2,15 @@
 
 include 'vendor/autoload.php';
 
+session_start();
+session_regenerate_id(true);
+
 /**
  * This is the client, will load up logic
  * Default page controller loads at the end
  */
 $sanitizedData  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-if (isset($sanitizedData) && sizeof($sanitizedData) > 0) {
+if (isset($sanitizedData) && sizeof($sanitizedData) == 11) {
     $sanitizeDataObject = new Cleanify\Controller\SanitizeData();
 
     $type = gettype($sanitizedData);
